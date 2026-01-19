@@ -495,13 +495,16 @@ function startBalloonGenerator() {
   setInterval(() => {
     if (celebrationScreen.classList.contains('active')) {
       createBalloon();
-      // Occasionally spawn a jasmine flower (30% chance)
-      if (Math.random() < 0.3) {
+      // Occasionally spawn a jasmine flower (20% chance on mobile, 30% on desktop)
+      const isMobile = window.innerWidth < 600;
+      const jasmineChance = isMobile ? 0.2 : 0.3;
+      if (Math.random() < jasmineChance) {
         createFloatingJasmine();
       }
     }
-  }, 3000); // New balloon every 3 seconds
+  }, window.innerWidth < 600 ? 5000 : 3000); // Fewer balloons on mobile
 }
+
 
 function createFloatingJasmine() {
   const container = document.querySelector('.decorations');
@@ -642,11 +645,19 @@ function setup3DTilt() {
   };
 
   document.addEventListener('mousemove', (e) => handleTilt(e.clientX, e.clientY));
+  
+  // Throttle touchmove to save battery/performance on mobile
+  let lastTouchTime = 0;
   document.addEventListener('touchmove', (e) => {
+    const now = Date.now();
+    if (now - lastTouchTime < 50) return; // ~20fps for tilt on mobile
+    lastTouchTime = now;
+    
     const touch = e.touches[0];
     handleTilt(touch.clientX, touch.clientY);
   }, { passive: true });
 }
+
 
 function setupTimelineObserver() {
   const observerOptions = { threshold: 0.2 };

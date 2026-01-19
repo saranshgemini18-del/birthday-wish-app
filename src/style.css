@@ -34,24 +34,31 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   opacity: 0;
   pointer-events: none;
   transition: opacity 1s ease-in-out;
+  overflow-x: hidden;
 }
 
 .screen.active {
   opacity: 1;
   pointer-events: all;
+  position: relative;
+  /* Change to relative when active to allow scrolling */
 }
 
 /* Intro Screen */
 #intro {
   background: radial-gradient(circle at bottom left, #061026, #162a4d, #0d1b33);
   overflow: hidden;
+  height: 100vh;
+  position: fixed;
+  /* Keep fixed during transition */
+  z-index: 1000;
 }
 
 #intro::before {
@@ -75,6 +82,7 @@ body {
   border: 1px solid var(--glass-border);
   box-shadow: 0 25px 80px var(--glass-shadow);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-width: 90%;
 }
 
 .intro-content:hover {
@@ -91,6 +99,16 @@ body {
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+@media (max-width: 600px) {
+  .intro-content h1 {
+    font-size: 2.5rem;
+  }
+
+  .intro-content {
+    padding: 2rem;
+  }
 }
 
 .fade-in {
@@ -126,21 +144,23 @@ body {
 /* Main Page Layout */
 #celebration {
   background: radial-gradient(circle at top right, #0d1b33, #061026);
-  padding: 2rem;
+  padding: 1rem;
   overflow-y: auto;
   align-items: flex-start;
   perspective: 2000px;
+  min-height: 100vh;
 }
 
 .main-layout {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4rem;
+  gap: 3rem;
   width: 100%;
   max-width: 1200px;
   z-index: 10;
   padding-bottom: 5rem;
+  margin-top: 4rem;
 }
 
 /* Glass Card Enhancements */
@@ -156,9 +176,17 @@ body {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-radius: 35px;
-  padding: 3rem;
+  padding: 2rem;
+  /* Reduced for mobile */
   text-align: center;
 }
+
+@media (min-width: 600px) {
+  .main-card {
+    padding: 3rem;
+  }
+}
+
 
 .cake-container {
   margin-bottom: 2rem;
@@ -1548,6 +1576,33 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
+@media (max-width: 600px) {
+
+  /* Performance optimization for mobile: reduce blur intensity */
+  .glass-card,
+  .timeline-content,
+  .intro-content,
+  .secret-btn,
+  .glass-btn {
+    backdrop-filter: blur(5px) !important;
+    -webkit-backdrop-filter: blur(5px) !important;
+  }
+
+  .main-layout {
+    gap: 2rem;
+    padding: 0 1rem 5rem;
+  }
+
+  .birthday-title {
+    font-size: 3rem !important;
+  }
+
+  .wish-text {
+    font-size: 1.1rem;
+  }
+}
+
+
 .app-footer {
   position: fixed;
   bottom: 10px;
@@ -1584,6 +1639,53 @@ body {
   box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
 }
 
+.secret-hint-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.click-here-arrow {
+  position: absolute;
+  right: calc(100% + 15px);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 1rem;
+  white-space: nowrap;
+  animation: arrowPoint 1.5s infinite ease-in-out;
+  pointer-events: none;
+  text-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
+}
+
+.arrow-icon {
+  font-size: 1.5rem;
+}
+
+@keyframes arrowPoint {
+
+  0%,
+  100% {
+    transform: translate(0, -50%);
+  }
+
+  50% {
+    transform: translate(10px, -50%);
+  }
+}
+
+@media (max-width: 600px) {
+  .click-here-arrow {
+    font-size: 0.8rem;
+  }
+}
+
+
 #secret-screen {
   background: radial-gradient(circle at center, #1a1a2e 0%, #0f0c29 100%);
   display: flex;
@@ -1606,6 +1708,7 @@ body {
   font-size: 3rem;
   margin-bottom: 0.5rem;
   background: linear-gradient(45deg, #ff9a9e 0%, #fecfef 100%);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: floatTitle 3s ease-in-out infinite;
