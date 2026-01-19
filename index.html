@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0f0c29" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Birthday Wish" />
+  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <title>Happy Birthday!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Outfit:wght@300;400;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+
+<body>
+  <div id="app">
+    <!-- Intro Screen -->
+    <section id="intro" class="screen active">
+      <div class="intro-content">
+        <h1 class="fade-in">Hey Bestie...💖</h1>
+        <p class="fade-in-delayed">I have something special for you.</p>
+        <button id="unlock-btn" class="glow-btn">Open My Heart 💖</button>
+      </div>
+    </section>
+
+    <!-- Main Celebration Screen -->
+    <section id="celebration" class="screen">
+      <div class="top-controls">
+        <div id="score-board" class="score-board">
+          <span class="score-icon">🎈</span>
+          <span id="score-value">0</span>
+        </div>
+        <button id="music-toggle" class="music-btn" title="Toggle Music">
+          <span class="icon">🎵</span>
+        </button>
+        <button id="secret-btn" class="secret-btn" title="A Little Secret...">
+          <span class="icon">🤫</span>
+        </button>
+      </div>
+
+      <div class="decorations">
+        <div class="float-item balloon-1">🎈</div>
+        <div class="float-item balloon-2">🎈</div>
+        <div class="float-item heart-1">💖</div>
+        <div class="float-item sparkle-1">✨</div>
+        <div class="float-item jasmine-1">🌼</div>
+      </div>
+
+      <canvas id="confetti-canvas"></canvas>
+
+      <div class="main-layout">
+        <div class="card-container">
+          <div class="glass-card main-card">
+            <div class="cake-container">
+              <div class="cake">
+                <div class="plate"></div>
+                <div class="layer layer-bottom"></div>
+                <div class="layer layer-middle"></div>
+                <div class="layer layer-top"></div>
+                <div class="icing"></div>
+                <div class="drip drip-1"></div>
+                <div class="drip drip-2"></div>
+                <div class="drip drip-3"></div>
+                <div class="candles">
+                  <div class="candle" id="candle-1">
+                    <div class="flame"></div>
+                  </div>
+                  <div class="candle" id="candle-2">
+                    <div class="flame"></div>
+                  </div>
+                  <div class="candle" id="candle-3">
+                    <div class="flame"></div>
+                  </div>
+                </div>
+              </div>
+              <p class="instruction-text">Blow air in microphone to blow Candles! 🕯️</p>
+            </div>
+            <h1 class="birthday-title hero-title">Happy Birthday!</h1>
+            <p class="wish-text">To the most amazing friend ever. Today is all about you!</p>
+
+            <div class="personal-note">
+              <p>You're not just my best friend, you're the family I chose. I hope this year brings you as much joy as
+                you
+                bring to everyone around you. Let's make more memories!</p>
+            </div>
+            <div class="interaction-bar">
+              <button id="hug-btn" class="interact-btn">Send a Virtual Hug 🤗</button>
+              <button id="hi5-btn" class="interact-btn">Virtual High-Five ✋</button>
+            </div>
+
+            <div class="footer-note-group">
+              <div class="footer-note big">With love, forever.</div>
+              <div class="footer-note">BY YOUR BESTU</div>
+            </div>
+
+            <!-- Jar of Joy Section -->
+            <div class="jar-section">
+              <p class="section-subtitle">Need a smile? Tap the jar! 🍯</p>
+              <div id="jar-of-joy" class="jar-container">
+                <div class="jar">
+                  <div class="jar-lid"></div>
+                  <div class="jar-body">
+                    <div class="jar-glint"></div>
+                  </div>
+                </div>
+                <div id="jar-labels-container"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Memory Lane Section -->
+        <div class="memory-lane-container">
+          <h2 class="section-title">Memory Lane 📸</h2>
+          <div class="photo-gallery">
+            <div class="polaroid" style="--r: -3deg">
+              <div class="polaroid-inner">
+                <div class="polaroid-front">
+                  <div class="photo-placeholder">🎂</div>
+                  <div class="caption">Day One</div>
+                </div>
+                <div class="polaroid-back">
+                  <p>"Where it all started! The first message that changed everything."</p>
+                </div>
+              </div>
+            </div>
+            <div class="polaroid" style="--r: 2deg">
+              <div class="polaroid-inner">
+                <div class="polaroid-front">
+                  <div class="photo-placeholder">🎮</div>
+                  <div class="caption">Gaming Buddies</div>
+                </div>
+                <div class="polaroid-back">
+                  <p>"To many more nights of carrying each other to victory!"</p>
+                </div>
+              </div>
+            </div>
+            <div class="polaroid" style="--r: -1deg">
+              <div class="polaroid-inner">
+                <div class="polaroid-front">
+                  <div class="photo-placeholder">🌟</div>
+                  <div class="caption">Besties</div>
+                </div>
+                <div class="polaroid-back">
+                  <p>"Because every moment with you is a lucky star."</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Friendship Timeline Section -->
+        <div class="timeline-container">
+          <h2 class="timeline-title">Our Story</h2>
+          <div id="days-counter" class="days-counter-display">
+            <span class="days-number">0</span>
+            <span class="days-label">Days of Friendship</span>
+          </div>
+          <div class="timeline">
+            <!-- Timeline items will be injected or updated via JS -->
+            <div class="timeline-item left visible" style="--i: 1">
+              <div class="timeline-content">
+                <h3>The First Hello 👋</h3>
+                <p>Remember when we first met online? That's where it all began!</p>
+                <span class="date">June 30, 2025</span>
+              </div>
+            </div>
+            <div class="timeline-item right visible" style="--i: 2">
+              <div class="timeline-content">
+                <h3>Connecting... 🌐</h3>
+                <p>Every day since then has been a new chapter in our story.</p>
+                <span class="date" id="current-day-tag">Day 1</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Digital Gift Reveal Section -->
+        <div class="gift-container">
+          <h2 class="gift-title">A Little Something for You... 🎁</h2>
+          <div id="gift-box" class="gift-box">
+            <div class="gift-lid"></div>
+            <div class="gift-body"></div>
+            <div class="gift-bow"></div>
+          </div>
+          <div id="gift-content" class="gift-content hidden">
+            <div class="glass-card gift-card">
+              <h3>Surprise! 🎈</h3>
+              <p>Since we are miles apart, here's a virtual gift of endless support, laughs, and gaming carry! 😉</p>
+
+              <div class="voice-note-section">
+                <p class="voice-note-label">A message for you... 🎙️</p>
+                <div class="voice-note-player">
+                  <button id="play-voice-btn" class="play-btn">
+                    <span class="icon">▶️</span>
+                  </button>
+                  <div class="audio-progress">
+                    <div id="audio-bar" class="progress-fill"></div>
+                  </div>
+                  <audio id="voice-note-audio" src="/src/assets/voice-note.mp3"></audio>
+                </div>
+              </div>
+
+              <div class="gift-icon">⭐</div>
+              <p class="gift-note">(I'll send the real one soon! Check your DMs later!)</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Magic Scratch Card Section -->
+        <div class="scratch-card-section">
+          <h2 class="section-title">A Secret for You... 🪄</h2>
+          <p class="instruction-text">Scratch the silver to reveal a hidden message!</p>
+          <div class="scratch-container">
+            <div class="scratch-content">
+              <h3>You're Truly One in a Million! 🌟</h3>
+              <p>I feel so lucky to have you in my life. Thanks for being the best friend ever!</p>
+              <div class="reveal-icon">💖</div>
+            </div>
+            <canvas id="scratch-canvas" width="300" height="200"></canvas>
+          </div>
+        </div>
+
+        <!-- Virtual Wish Wall -->
+        <div class="wish-wall-container">
+          <h2 class="section-title">Virtual Wish Wall ✨</h2>
+          <div class="wish-input-group">
+            <input type="text" id="wish-input" placeholder="Make a wish..." maxlength="50">
+            <button id="add-wish-btn" class="glow-btn small">Pin It!</button>
+          </div>
+          <div id="wish-board" class="wish-board">
+            <div id="wish-loader" class="loader-container">
+              <div class="spinner"></div>
+              <p>Loading wishes...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Secret Gallery Screen -->
+    <section id="secret-screen" class="screen">
+      <div class="secret-content">
+        <h2 class="secret-title">A Little Secret... 🤫</h2>
+        <p class="secret-desc">Drag or swipe through these cards to find out something special.</p>
+
+        <div class="carousel-container">
+          <div id="secret-carousel" class="carousel">
+            <!-- Cards will be injected by JS -->
+          </div>
+        </div>
+
+        <div class="carousel-controls">
+          <button id="back-to-celebration" class="glass-btn">Go Back</button>
+        </div>
+      </div>
+    </section>
+
+    <audio id="bg-music" loop src="https://assets.mixkit.co/active_storage/sfx/123/123-preview.mp3"></audio>
+    <!-- Replace with a better track later if possible -->
+  </div>
+  <footer class="app-footer">BY YOUR BESTU</footer>
+  <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>
