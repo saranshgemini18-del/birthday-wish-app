@@ -373,7 +373,16 @@ function setupVoiceNotePlayer() {
   playVoiceBtn.addEventListener('click', (e) => {
     e.stopPropagation(); // Don't trigger gift box clicks
     if (voiceAudio.paused) {
-      voiceAudio.play();
+      voiceAudio.play().then(() => {
+        // Pause background music for better listening experience
+        if (isMusicPlaying && bgMusic) {
+          bgMusic.pause();
+          musicToggle.classList.add('muted');
+          musicToggle.querySelector('.icon').textContent = '🔇';
+        }
+      }).catch(err => {
+        console.error("Voice note playback failed:", err);
+      });
       playVoiceBtn.innerHTML = '<span class="icon">⏸️</span>';
     } else {
       voiceAudio.pause();
@@ -389,6 +398,17 @@ function setupVoiceNotePlayer() {
   voiceAudio.addEventListener('ended', () => {
     playVoiceBtn.innerHTML = '<span class="icon">▶️</span>';
     audioBar.style.width = '0%';
+    // Resume background music if it was playing
+    if (isMusicPlaying && bgMusic) {
+      bgMusic.play().catch(e => console.log("Bg music resume failed", e));
+      musicToggle.classList.remove('muted');
+      musicToggle.querySelector('.icon').textContent = '🎵';
+    }
+  });
+
+  voiceAudio.addEventListener('error', (e) => {
+    console.error("Audio Load Error:", voiceAudio.error);
+    playVoiceBtn.title = "Error loading message";
   });
 }
 
