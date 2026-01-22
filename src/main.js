@@ -9,6 +9,11 @@ const CONFIG = {
   popSound: 'https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3', // Pop sound effect
 };
 
+// Preload sound
+const popAudio = new Audio(CONFIG.popSound);
+popAudio.load();
+
+
 // UI Elements
 const unlockBtn = document.getElementById('unlock-btn');
 const introScreen = document.getElementById('intro');
@@ -347,12 +352,14 @@ function updateTimelineDays() {
     const stepTime = Math.abs(Math.floor(duration / diffDays));
 
     const timer = setInterval(() => {
-      current += 1;
-      daysNumberElement.textContent = current;
+      current += Math.ceil(diffDays / 60); // Faster increment for long durations
       if (current >= diffDays) {
+        current = diffDays;
         clearInterval(timer);
       }
-    }, stepTime);
+      daysNumberElement.textContent = current;
+    }, Math.max(stepTime, 30));
+
   }
 
   if (currentDayTag) {
@@ -581,9 +588,10 @@ function popBalloon(balloon) {
   if (scoreValue) scoreValue.textContent = score;
 
   // Sound
-  const audio = new Audio(CONFIG.popSound);
-  audio.volume = 0.3;
-  audio.play().catch(e => { }); // Ignore autoplay blocks
+  const audio = popAudio.cloneNode();
+  audio.volume = 0.6; // Increased volume
+  audio.play().catch(e => console.log("Sound play error:", e));
+
 
   // Confetti mini-burst at pop location
   const rect = balloon.getBoundingClientRect();
@@ -645,14 +653,14 @@ function setup3DTilt() {
   };
 
   document.addEventListener('mousemove', (e) => handleTilt(e.clientX, e.clientY));
-  
+
   // Throttle touchmove to save battery/performance on mobile
   let lastTouchTime = 0;
   document.addEventListener('touchmove', (e) => {
     const now = Date.now();
     if (now - lastTouchTime < 50) return; // ~20fps for tilt on mobile
     lastTouchTime = now;
-    
+
     const touch = e.touches[0];
     handleTilt(touch.clientX, touch.clientY);
   }, { passive: true });

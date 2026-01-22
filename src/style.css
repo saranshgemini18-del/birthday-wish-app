@@ -1010,7 +1010,40 @@ body {
   .decorations .float-item {
     font-size: 2.2rem;
   }
+
+  .timeline::after {
+    left: 31px;
+  }
+
+  .timeline-item {
+    width: 100%;
+    padding-left: 70px;
+    padding-right: 25px;
+    text-align: left;
+  }
+
+  .timeline-item.right {
+    left: 0;
+  }
+
+  .timeline-item::after {
+    left: 19px !important;
+    right: auto !important;
+  }
+
+  .timeline-content {
+    padding: 1.5rem;
+  }
+
+  .timeline-content .date {
+    position: relative;
+    top: 0;
+    display: block;
+    margin-bottom: 0.5rem;
+    text-align: left !important;
+  }
 }
+
 
 /* Landscape Mobile Fix */
 @media (max-height: 500px) and (orientation: landscape) {
